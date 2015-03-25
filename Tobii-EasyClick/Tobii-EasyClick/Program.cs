@@ -64,7 +64,28 @@ namespace Tobii_EasyClick
                 //Display "HIT" on console and print out data.
                 Console.WriteLine("HIT");
                 //1 is LEFT BUTTON, 2 is RIGHT BUTTON, 3 is BOTH.
-                Console.WriteLine(data[0]);
+                if (data[0] == 1)
+                {
+                    Console.WriteLine(data[0]);
+                    MouseHandling.MouseClick(MouseHandling.MOUSEEVENTF_LEFTUP | MouseHandling.MOUSEEVENTF_LEFTDOWN);
+                    
+                }
+
+                if (data[0] == 2)
+                {
+                    Console.WriteLine(data[0]);
+                    MouseHandling.MouseClick(MouseHandling.MOUSEEVENTF_RIGHTUP | MouseHandling.MOUSEEVENTF_RIGHTDOWN);
+
+                }
+
+                if (data[0] == 3)
+                {
+                    Console.WriteLine(data[0]);
+                    MouseHandling.MouseClick(MouseHandling.MOUSEEVENTF_LEFTUP | MouseHandling.MOUSEEVENTF_LEFTDOWN);
+                    MouseHandling.MouseClick(MouseHandling.MOUSEEVENTF_LEFTUP | MouseHandling.MOUSEEVENTF_LEFTDOWN);
+
+                }
+               
             }
 
 

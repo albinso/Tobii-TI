@@ -16,17 +16,15 @@ namespace Tobii_EasyClick
         [DllImport("user32")]
         public static extern int SetCursorPos(int x, int y);
 
-        private const int MOUSEEVENTF_LEFTDOWN = 0x02;
-        private const int MOUSEEVENTF_LEFTUP = 0x04;
-        private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
-        private const int MOUSEEVENTF_RIGHTUP = 0x10;
+        public const int MOUSEEVENTF_LEFTDOWN = 0x02;
+        public const int MOUSEEVENTF_LEFTUP = 0x04;
+        public const int MOUSEEVENTF_RIGHTDOWN = 0x08;
+        public const int MOUSEEVENTF_RIGHTUP = 0x10;
 
-
-
-        public static void MouseClick(uint x, uint y)
+        public static void MouseClick(uint eventType)
         {
 
-            mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, x, y, 0, 0);
+            mouse_event(eventType, 0, 0, 0, 0);
         }
     }
 }
