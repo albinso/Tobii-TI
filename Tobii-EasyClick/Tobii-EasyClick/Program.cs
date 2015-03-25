@@ -7,19 +7,21 @@ using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Devices.Enumeration;
 using Windows.Storage.Streams;
-
+using System.Windows.Forms;
 
 namespace Tobii_EasyClick
 {
     class Program
     {
-        public class SensorValueChangedEventArgs : EventArgs
+        public class SensorValueChangedEventArgs : ApplicationContext 
         {
+
             private const string UUID_KEY_SERV = "0000ffe0-0000-1000-8000-00805f9b34fb";
             private const string UUID_KEY_DATA = "0000ffe1-0000-1000-8000-00805f9b34fb";
 
             static void Main(string[] args)
             {
+
                 //NEW CODE: USING NOTIFICATIONS (you DON'T need to run the UI library first!!!)
                 Console.WriteLine("Buttons:");
                 executeOnNotification(UUID_KEY_SERV, UUID_KEY_DATA, buttonPressed);
@@ -74,15 +76,14 @@ namespace Tobii_EasyClick
                 if (data[0] == 2)
                 {
                     Console.WriteLine(data[0]);
-                    MouseHandling.MouseClick(MouseHandling.MOUSEEVENTF_RIGHTUP | MouseHandling.MOUSEEVENTF_RIGHTDOWN);
+                    SendKeys.SendWait("^{Tab}");
 
                 }
 
                 if (data[0] == 3)
                 {
                     Console.WriteLine(data[0]);
-                    MouseHandling.MouseClick(MouseHandling.MOUSEEVENTF_LEFTUP | MouseHandling.MOUSEEVENTF_LEFTDOWN);
-                    MouseHandling.MouseClick(MouseHandling.MOUSEEVENTF_LEFTUP | MouseHandling.MOUSEEVENTF_LEFTDOWN);
+                    SendKeys.SendWait("%{F4}");
 
                 }
                
