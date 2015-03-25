@@ -49,6 +49,7 @@
     <Reference Include="Windows" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MouseHandling.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
