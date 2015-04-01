@@ -51,6 +51,10 @@ namespace TobiiDemo
         /// <param name="args">contains all kinds of data</param>
         static void buttonPressed(GattCharacteristic sender, GattValueChangedEventArgs args)
         {
+            //sender.ValueChanged -= buttonPressed;
+            ////WARNING!!! the "+=" tells event listener to CALL a delagate method.
+            //sender.ValueChanged += buttonPressed;
+
             //Create a byte array(with same size as the caracteristics value)
             Byte[] data = getDataBytes(args);
 
@@ -77,10 +81,10 @@ namespace TobiiDemo
                 SendKeys.SendWait("%{F4}");
 
             }
-
         }
 
 
+        
         /// <summary>
         /// Returns a GATT characteristic for a sensor's data service.
         /// </summary>
