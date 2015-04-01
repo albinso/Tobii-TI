@@ -70,13 +70,14 @@ namespace Tobii_EasyClick
                 {
                     Console.WriteLine(data[0]);
                     MouseHandling.MouseClick(MouseHandling.MOUSEEVENTF_LEFTUP | MouseHandling.MOUSEEVENTF_LEFTDOWN);
-                    
+                    //SendKeys.SendWait("{LEFT}");
                 }
 
                 if (data[0] == 2)
                 {
                     Console.WriteLine(data[0]);
-                    SendKeys.SendWait("^{Tab}");
+                    //SendKeys.SendWait("^{Tab}");
+                    SendKeys.SendWait("{F5}");
 
                 }
 
