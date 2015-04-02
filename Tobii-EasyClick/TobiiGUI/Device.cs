@@ -24,9 +24,9 @@ namespace TobiiGUI
             {"Launch Chrome", 5},
             {"Launch Music", 6}
         };
-        static SelectionForm.ButtonEnum buttonChoice;
-        static SelectionForm.DeviceEnum deviceChoice;
-        static object functionChoice;
+        SelectionForm.ButtonEnum buttonChoice;
+        SelectionForm.DeviceEnum deviceChoice;
+        object functionChoice;
 
         static Dictionary<string, object>[] deviceFunctions = new Dictionary<string, object>[] { mouseFunctions, keyBoardFunctions, commandFunctions };
         
@@ -35,11 +35,11 @@ namespace TobiiGUI
             return deviceFunctions[(int) choice];
         }
 
-        public static void BindFunction(SelectionForm.ButtonEnum buttonChoice, SelectionForm.DeviceEnum deviceChoice, object functionChoice)
+        public void BindFunction(SelectionForm.ButtonEnum buttonChoice, SelectionForm.DeviceEnum deviceChoice, object functionChoice)
         {
-            Device.buttonChoice = buttonChoice;
-            Device.deviceChoice = deviceChoice;
-            Device.functionChoice = functionChoice;
+            this.buttonChoice = buttonChoice;
+            this.deviceChoice = deviceChoice;
+            this.functionChoice = functionChoice;
         }
 
 
