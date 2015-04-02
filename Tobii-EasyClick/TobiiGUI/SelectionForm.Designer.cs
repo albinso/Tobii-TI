@@ -34,6 +34,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.commitButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonComboBox
@@ -91,11 +92,22 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "3. Function";
             // 
-            // Form1
+            // commitButton
+            // 
+            this.commitButton.Location = new System.Drawing.Point(513, 196);
+            this.commitButton.Name = "commitButton";
+            this.commitButton.Size = new System.Drawing.Size(147, 49);
+            this.commitButton.TabIndex = 6;
+            this.commitButton.Text = "Commit";
+            this.commitButton.UseVisualStyleBackColor = true;
+            this.commitButton.Click += new System.EventHandler(this.commitButton_Click);
+            // 
+            // SelectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1456, 229);
+            this.ClientSize = new System.Drawing.Size(1456, 257);
+            this.Controls.Add(this.commitButton);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -103,7 +115,7 @@
             this.Controls.Add(this.deviceComboBox);
             this.Controls.Add(this.buttonComboBox);
             this.Margin = new System.Windows.Forms.Padding(6);
-            this.Name = "Form1";
+            this.Name = "SelectionForm";
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -118,6 +130,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button commitButton;
 
     }
 }
