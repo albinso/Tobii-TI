@@ -13,44 +13,62 @@ namespace TobiiGUI
         public enum ButtonEnum { Right, Left, Both }
         public enum DeviceEnum { Mouse, Keyboard, Command }
 
-
-        ButtonEnum buttonChoice;
-        DeviceEnum deviceChoice;
-        object functionChoice;
-
         private Dictionary<ButtonEnum, DeviceEnum> keyToDevice;
         private Dictionary<ButtonEnum, object> keyToFunction;
 
-        static Dictionary<string, object> mouseFunctions = new Dictionary<string, object> {
-            {"Left click", (MouseHandling.MOUSEEVENTF_LEFTUP | MouseHandling.MOUSEEVENTF_LEFTDOWN)},
-            {"Right click", (MouseHandling.MOUSEEVENTF_RIGHTUP | MouseHandling.MOUSEEVENTF_RIGHTDOWN)}
-        };
+        public static Dictionary<string, ButtonEnum> buttonChoices;
+        public static Dictionary<string, DeviceEnum> deviceChoices;
 
-        static Dictionary<string, object> keyBoardFunctions = new Dictionary<string, object>
-        {
-            {"Alt + F4", "%{F4}"},
-            {"Ctrl + Tab", "^{Tab}"}
-        };
+        static Dictionary<string, object> mouseFunctions;
+        static Dictionary<string, object> keyBoardFunctions;
+        static Dictionary<string, object> commandFunctions;
 
-        static Dictionary<string, object> commandFunctions = new Dictionary<string, object>
-        {
-            {"Launch Chrome", @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"},
-            {"Launch Music", @"C:\Program Files (x86)\Windows Media Player\wmplayer.exe"},
-            {"Choose file", ""}
-
-        };
+        static Dictionary<string, object>[] deviceFunctions;
 
         public Configuration()
         {
             keyToDevice = new Dictionary<ButtonEnum,DeviceEnum>();
             keyToFunction = new Dictionary<ButtonEnum, object>();
+
+            /////////////// Button Dictionary /////////////////
+            buttonChoices = new Dictionary<string, ButtonEnum> {
+                {"Right", ButtonEnum.Right},
+                {"Left", ButtonEnum.Left},
+                {"Both", ButtonEnum.Both}
+            };
+
+            ////////////// Device Dictionary /////////////////
+            deviceChoices = new Dictionary<string, DeviceEnum> {
+                {"Mouse", DeviceEnum.Mouse},
+                {"Keyboard", DeviceEnum.Keyboard},
+                {"Command", DeviceEnum.Command}
+            };
+
+            //////////// Functions Dictionary ////////////////
+            mouseFunctions = new Dictionary<string, object> {
+                {"Left click", (MouseHandling.MOUSEEVENTF_LEFTUP | MouseHandling.MOUSEEVENTF_LEFTDOWN)},
+                {"Right click", (MouseHandling.MOUSEEVENTF_RIGHTUP | MouseHandling.MOUSEEVENTF_RIGHTDOWN)}
+            };
+
+            keyBoardFunctions = new Dictionary<string, object> {
+                {"Alt + F4", "%{F4}"},
+                {"Ctrl + Tab", "^{Tab}"},
+                {"Custom", "kb"}
+            };
+
+            commandFunctions = new Dictionary<string, object> {
+                {"Launch Chrome", @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"},
+                {"Launch Music", @"C:\Program Files (x86)\Windows Media Player\wmplayer.exe"},
+                {"Choose file", "cf"}
+            };
+
+            deviceFunctions = new Dictionary<string, object>[] {
+                mouseFunctions, 
+                keyBoardFunctions,
+                commandFunctions
+            };
         }
 
-        static Dictionary<string, object>[] deviceFunctions = new Dictionary<string, object>[] {
-            mouseFunctions, 
-            keyBoardFunctions,
-            commandFunctions
-        };
         
         public static Dictionary<string, object> GetFunctions(DeviceEnum choice)
         {
