@@ -10,8 +10,8 @@
     <ProjectGuid>{4C7C710A-7F81-40FD-89C8-A3CEB99BB612}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tobii</RootNamespace>
-    <AssemblyName>Tobii</AssemblyName>
+    <RootNamespace>TobiiGUI</RootNamespace>
+    <AssemblyName>TobiiGUI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -56,17 +56,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLE_Utilities.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="ButtonListener.cs" />
+    <Compile Include="Device.cs" />
+    <Compile Include="SelectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="SelectionForm.Designer.cs">
+      <DependentUpon>SelectionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MouseHandling.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="SelectionForm.resx">
+      <DependentUpon>SelectionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

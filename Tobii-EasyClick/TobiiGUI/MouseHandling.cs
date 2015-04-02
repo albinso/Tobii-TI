@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace TobiiDemo
+namespace TobiiGUI
 {
     class MouseHandling
     {

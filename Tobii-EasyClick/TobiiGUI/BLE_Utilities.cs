@@ -9,7 +9,7 @@ using Windows.Devices.Enumeration;
 using Windows.Storage.Streams;
 using System.Windows.Forms;
 
-namespace TobiiDemo
+namespace TobiiGUI
 {
     public class BLE_Utilities
     {
@@ -60,19 +60,17 @@ namespace TobiiDemo
 
             //Display "HIT" on console and print out data.
             Console.WriteLine("HIT");
-            //1 is LEFT BUTTON, 2 is RIGHT BUTTON, 3 is BOTH.
+            //1 is Right BUTTON, 2 is Left BUTTON, 3 is BOTH.
             if (data[0] == 1)
             {
                 Console.WriteLine(data[0]);
                 MouseHandling.MouseClick(MouseHandling.MOUSEEVENTF_LEFTUP | MouseHandling.MOUSEEVENTF_LEFTDOWN);
-
             }
 
             if (data[0] == 2)
             {
                 Console.WriteLine(data[0]);
                 SendKeys.SendWait("^{Tab}");
-
             }
 
             if (data[0] == 3)

@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tobii-EasyClick", "Tobii-EasyClick\Tobii-EasyClick.csproj", "{74C8C617-DB74-4798-B585-69CDFEF7E396}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TobiiGUI", "Test\TobiiGUI.csproj", "{4C7C710A-7F81-40FD-89C8-A3CEB99BB612}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TobiiGUI", "TobiiGUI\TobiiGUI.csproj", "{4C7C710A-7F81-40FD-89C8-A3CEB99BB612}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
