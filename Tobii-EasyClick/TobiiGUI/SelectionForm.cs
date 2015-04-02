@@ -12,13 +12,11 @@ namespace TobiiGUI
 {
     public partial class SelectionForm : Form
     {
-        public enum ButtonEnum {Right, Left, Both}
-        public enum DeviceEnum { Mouse, Keyboard, Command}
 
         Dictionary<string, object> functionChoices;
 
-        ButtonEnum buttonChoice = ButtonEnum.Right;
-        DeviceEnum deviceChoice = DeviceEnum.Mouse;
+        Configuration.ButtonEnum buttonChoice = Configuration.ButtonEnum.Right;
+        Configuration.DeviceEnum deviceChoice = Configuration.DeviceEnum.Mouse;
         object functionChoice;
         public SelectionForm()
         {
@@ -39,31 +37,28 @@ namespace TobiiGUI
 
             InitializeComboBox();
 
-
-            
-
         }
 
 
         private void InitializeComboBox()
         {
-            Dictionary<string, ButtonEnum> buttonChoices = new Dictionary<string, ButtonEnum>();
-            buttonChoices.Add("Right", ButtonEnum.Right);
-            buttonChoices.Add("Left", ButtonEnum.Left);
-            buttonChoices.Add("Both", ButtonEnum.Both);
+            Dictionary<string, Configuration.ButtonEnum> buttonChoices = new Dictionary<string, Configuration.ButtonEnum>();
+            buttonChoices.Add("Right", Configuration.ButtonEnum.Right);
+            buttonChoices.Add("Left", Configuration.ButtonEnum.Left);
+            buttonChoices.Add("Both", Configuration.ButtonEnum.Both);
             buttonComboBox.DataSource = new BindingSource(buttonChoices, null);
             buttonComboBox.ValueMember = "Value";
             buttonComboBox.DisplayMember = "Key";
 
-            Dictionary<string, DeviceEnum> deviceChoices = new Dictionary<string, DeviceEnum>();
-            deviceChoices.Add("Mouse", DeviceEnum.Mouse);
-            deviceChoices.Add("Keyboard", DeviceEnum.Keyboard);
-            deviceChoices.Add("Command", DeviceEnum.Command);
+            Dictionary<string, Configuration.DeviceEnum> deviceChoices = new Dictionary<string, Configuration.DeviceEnum>();
+            deviceChoices.Add("Mouse", Configuration.DeviceEnum.Mouse);
+            deviceChoices.Add("Keyboard", Configuration.DeviceEnum.Keyboard);
+            deviceChoices.Add("Command", Configuration.DeviceEnum.Command);
             deviceComboBox.DataSource = new BindingSource(deviceChoices, null);
             deviceComboBox.ValueMember = "Value";
             deviceComboBox.DisplayMember = "Key";
 
-            functionChoices = Configuration.GetFunctions(DeviceEnum.Mouse);
+            functionChoices = Configuration.GetFunctions(Configuration.DeviceEnum.Mouse);
             functionComboBox.DataSource = new BindingSource(functionChoices, null);
             functionComboBox.ValueMember = "Value";
             functionComboBox.DisplayMember = "Key";
@@ -76,13 +71,13 @@ namespace TobiiGUI
 
         private void buttonComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            KeyValuePair<string, ButtonEnum> choice = (KeyValuePair<string, ButtonEnum>) buttonComboBox.SelectedItem;
+            KeyValuePair<string, Configuration.ButtonEnum> choice = (KeyValuePair<string, Configuration.ButtonEnum>)buttonComboBox.SelectedItem;
             buttonChoice = choice.Value;
         }
 
         private void deviceCombox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            KeyValuePair<string, DeviceEnum> choice = (KeyValuePair<string, DeviceEnum>)deviceComboBox.SelectedItem;
+            KeyValuePair<string, Configuration.DeviceEnum> choice = (KeyValuePair<string, Configuration.DeviceEnum>)deviceComboBox.SelectedItem;
             deviceChoice = choice.Value;
 
             functionChoices = Configuration.GetFunctions(deviceChoice);
@@ -90,15 +85,28 @@ namespace TobiiGUI
         }
 
         private void functionComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        {       
             KeyValuePair<string, object> choice = (KeyValuePair<string, object>)functionComboBox.SelectedItem;
             functionChoice = choice.Value;
+
+            if (functionChoice.ToString().Equals(""))
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    functionChoice = openFileDialog1.FileName;
+                }
+            }
         }
 
         private void commitButton_Click(object sender, EventArgs e)
         {
             Configuration c = (Configuration)(BLE_Utilities.listener);
             c.BindFunction(buttonChoice, deviceChoice, functionChoice);
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
         }
     }
 }

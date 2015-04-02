@@ -10,12 +10,16 @@ namespace TobiiGUI
 {
     public class Configuration : ButtonListener
     {
-        SelectionForm.ButtonEnum buttonChoice;
-        SelectionForm.DeviceEnum deviceChoice;
+        public enum ButtonEnum { Right, Left, Both }
+        public enum DeviceEnum { Mouse, Keyboard, Command }
+
+
+        ButtonEnum buttonChoice;
+        DeviceEnum deviceChoice;
         object functionChoice;
 
-        private Dictionary<SelectionForm.ButtonEnum, SelectionForm.DeviceEnum> keyToDevice;
-        private Dictionary<SelectionForm.ButtonEnum, object> keyToFunction;
+        private Dictionary<ButtonEnum, DeviceEnum> keyToDevice;
+        private Dictionary<ButtonEnum, object> keyToFunction;
 
         static Dictionary<string, object> mouseFunctions = new Dictionary<string, object> {
             {"Left click", (MouseHandling.MOUSEEVENTF_LEFTUP | MouseHandling.MOUSEEVENTF_LEFTDOWN)},
@@ -31,26 +35,29 @@ namespace TobiiGUI
         static Dictionary<string, object> commandFunctions = new Dictionary<string, object>
         {
             {"Launch Chrome", @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"},
-            {"Launch Music", @"C:\Program Files (x86)\Windows Media Player\wmplayer.exe"}
+            {"Launch Music", @"C:\Program Files (x86)\Windows Media Player\wmplayer.exe"},
+            {"Choose file", ""}
+
         };
 
         public Configuration()
         {
-            keyToDevice = new Dictionary<SelectionForm.ButtonEnum,SelectionForm.DeviceEnum>();
-            keyToFunction = new Dictionary<SelectionForm.ButtonEnum, object>();
+            keyToDevice = new Dictionary<ButtonEnum,DeviceEnum>();
+            keyToFunction = new Dictionary<ButtonEnum, object>();
         }
+
         static Dictionary<string, object>[] deviceFunctions = new Dictionary<string, object>[] {
             mouseFunctions, 
-            keyBoardFunctions, 
-            commandFunctions 
+            keyBoardFunctions,
+            commandFunctions
         };
         
-        public static Dictionary<string, object> GetFunctions(SelectionForm.DeviceEnum choice)
+        public static Dictionary<string, object> GetFunctions(DeviceEnum choice)
         {
             return deviceFunctions[(int) choice];
         }
 
-        public void BindFunction(SelectionForm.ButtonEnum buttonChoice, SelectionForm.DeviceEnum deviceChoice, object functionChoice)
+        public void BindFunction(ButtonEnum buttonChoice, DeviceEnum deviceChoice, object functionChoice)
         {
             keyToDevice.Remove(buttonChoice);
             keyToFunction.Remove(buttonChoice);
@@ -59,23 +66,23 @@ namespace TobiiGUI
             keyToFunction.Add(buttonChoice, functionChoice);
         }
 
-        private void PerformAction(SelectionForm.ButtonEnum button)
+        private void PerformAction(ButtonEnum button)
         {
             if (!keyToDevice.ContainsKey(button))
             {
                 return;
             }
 
-            SelectionForm.DeviceEnum device = keyToDevice[button];
+            DeviceEnum device = keyToDevice[button];
             switch (device)
             {
-                case SelectionForm.DeviceEnum.Mouse:
+                case DeviceEnum.Mouse:
                     MouseHandling.MouseClick(Convert.ToUInt32(keyToFunction[button]));
                     break;
-                case SelectionForm.DeviceEnum.Keyboard:
+                case DeviceEnum.Keyboard:
                     SendKeys.SendWait((string)keyToFunction[button]);
                     break;
-                case SelectionForm.DeviceEnum.Command:
+                case DeviceEnum.Command:
                     Process process = new Process();
                     process.StartInfo.FileName = (string)keyToFunction[button];
                     process.Start();
@@ -89,18 +96,18 @@ namespace TobiiGUI
         {
             if (isClick)
             {
-                PerformAction(SelectionForm.ButtonEnum.Right);             
+                PerformAction(ButtonEnum.Right);             
             }
             if (isHold)
             {
-                PerformAction(SelectionForm.ButtonEnum.Both);
+                PerformAction(ButtonEnum.Both);
             }
         }
         override public void OnButtonSingleOrDoubleClick(BLE_Utilities button, bool isSingleClick, bool isDoubleClick)
         {
             if (isDoubleClick)
             {
-                PerformAction(SelectionForm.ButtonEnum.Left);
+                PerformAction(ButtonEnum.Left);
             }
         }
 
