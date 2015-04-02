@@ -15,7 +15,7 @@ namespace TobiiGUI
     {
         private const string UUID_KEY_SERV = "0000ffe0-0000-1000-8000-00805f9b34fb";
         private const string UUID_KEY_DATA = "0000ffe1-0000-1000-8000-00805f9b34fb";
-
+        public static ButtonListener listener;
         public static void Start()
         {
             Task.Run(async () => await executeOnNotification(UUID_KEY_SERV, UUID_KEY_DATA, buttonPressed));
@@ -32,6 +32,11 @@ namespace TobiiGUI
             characteristic.ValueChanged -= methodToExecute;
             //WARNING!!! the "+=" tells event listener to CALL a delagate method.
             characteristic.ValueChanged += methodToExecute;
+        }
+
+        public static void SetListener(ButtonListener listener)
+        {
+            BLE_Utilities.listener = listener;
         }
 
         static byte[] getDataBytes(GattValueChangedEventArgs args)
@@ -63,20 +68,18 @@ namespace TobiiGUI
             //1 is Right BUTTON, 2 is Left BUTTON, 3 is BOTH.
             if (data[0] == 1)
             {
-                Console.WriteLine(data[0]);
-                MouseHandling.MouseClick(MouseHandling.MOUSEEVENTF_LEFTUP | MouseHandling.MOUSEEVENTF_LEFTDOWN);
+                listener.OnButtonClickOrHold(null, true, false);
+                //MouseHandling.MouseClick(MouseHandling.MOUSEEVENTF_LEFTUP | MouseHandling.MOUSEEVENTF_LEFTDOWN);
             }
 
             if (data[0] == 2)
             {
-                Console.WriteLine(data[0]);
-                SendKeys.SendWait("^{Tab}");
+                listener.OnButtonSingleOrDoubleClick(null, false, true);
             }
 
             if (data[0] == 3)
             {
-                Console.WriteLine(data[0]);
-                SendKeys.SendWait("%{F4}");
+                listener.OnButtonClickOrHold(null, false, true);
 
             }
         }

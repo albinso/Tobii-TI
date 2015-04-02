@@ -17,8 +17,8 @@ namespace TobiiGUI
 
         Dictionary<string, object> functionChoices;
 
-        ButtonEnum buttonChoice;
-        DeviceEnum deviceChoice;
+        ButtonEnum buttonChoice = ButtonEnum.Right;
+        DeviceEnum deviceChoice = DeviceEnum.Mouse;
 
         public SelectionForm()
         {
@@ -29,10 +29,18 @@ namespace TobiiGUI
             //myButton.connect();
             //Event listner = new MyListerInterface();
             //myButton.setEvent(lister);
-            
+
             InitializeComponent();
-            InitializeComboBox();
+
+            Configuration config = new Configuration();
+
+            BLE_Utilities.SetListener(config);
             BLE_Utilities.Start();
+
+            InitializeComboBox();
+
+
+            
 
         }
 
@@ -83,9 +91,11 @@ namespace TobiiGUI
 
         private void functionComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //KeyValuePair<string, object> choice = (KeyValuePair<string, object>)deviceComboBox.SelectedItem;
-            //object functionChoice = choice.Value;
-            //Device.BindFunction(buttonChoice, deviceChoice, functionChoice);
+            KeyValuePair<string, object> choice = (KeyValuePair<string, object>)functionComboBox.SelectedItem;
+            object functionChoice = choice.Value;
+            Configuration c = (Configuration)(BLE_Utilities.listener);
+            c.BindFunction(buttonChoice, deviceChoice, functionChoice);
+
         }
     }
 }
