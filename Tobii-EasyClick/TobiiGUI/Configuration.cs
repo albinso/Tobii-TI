@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace TobiiGUI
 {
-    class Device
+    class Configuration
     {
+        public static Dictionary<int, Configuration> mapping; // Uniquely binds a button id to a Configuration. 
         static Dictionary<string, object> mouseFunctions = new Dictionary<string, object> {
             {"Left click", 1},
             {"Right click", 2}

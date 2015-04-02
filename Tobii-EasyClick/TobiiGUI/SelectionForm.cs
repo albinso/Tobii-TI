@@ -55,7 +55,7 @@ namespace TobiiGUI
             deviceComboBox.ValueMember = "Value";
             deviceComboBox.DisplayMember = "Key";
 
-            functionChoices = Device.GetFunctions(DeviceEnum.Mouse);
+            functionChoices = Configuration.GetFunctions(DeviceEnum.Mouse);
             functionComboBox.DataSource = new BindingSource(functionChoices, null);
             functionComboBox.ValueMember = "Value";
             functionComboBox.DisplayMember = "Key";
@@ -77,7 +77,7 @@ namespace TobiiGUI
             KeyValuePair<string, DeviceEnum> choice = (KeyValuePair<string, DeviceEnum>)deviceComboBox.SelectedItem;
             deviceChoice = choice.Value;
 
-            functionChoices = Device.GetFunctions(deviceChoice);
+            functionChoices = Configuration.GetFunctions(deviceChoice);
             functionComboBox.DataSource = new BindingSource(functionChoices, null);
         }
 
