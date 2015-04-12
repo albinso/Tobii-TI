@@ -46,14 +46,17 @@ namespace TobiiGUI
 
             //////////// Functions Dictionary ////////////////
             mouseFunctions = new Dictionary<string, object> {
+                {"Right click", (MouseHandling.MOUSEEVENTF_RIGHTUP | MouseHandling.MOUSEEVENTF_RIGHTDOWN)},
                 {"Left click", (MouseHandling.MOUSEEVENTF_LEFTUP | MouseHandling.MOUSEEVENTF_LEFTDOWN)},
-                {"Right click", (MouseHandling.MOUSEEVENTF_RIGHTUP | MouseHandling.MOUSEEVENTF_RIGHTDOWN)}
             };
 
             keyBoardFunctions = new Dictionary<string, object> {
                 {"Alt + F4", "%{F4}"},
                 {"Ctrl + Tab", "^{Tab}"},
-                {"Custom", "kb"}
+                {"Ctrl + T", "^{T}"},
+                {"Right", "{RIGHT}"},
+                {"Left", "{LEFT}"},
+                //{"Custom", "kb"}
             };
 
             commandFunctions = new Dictionary<string, object> {
