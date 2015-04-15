@@ -52,11 +52,13 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="TI-WindowsLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Flic\Flic-WindowsLib\TI-WindowsLib\bin\Debug\TI-WindowsLib.dll</HintPath>
+    </Reference>
     <Reference Include="Windows" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BLE_Utilities.cs" />
-    <Compile Include="ButtonListener.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="SelectionForm.cs">
       <SubType>Form</SubType>

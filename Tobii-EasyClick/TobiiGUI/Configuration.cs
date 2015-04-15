@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using TI_WindowsLib;
 
 namespace TobiiGUI
 {
@@ -113,28 +114,19 @@ namespace TobiiGUI
             }
         }
 
-        override public void OnButtonClickOrHold(BLE_Utilities button, bool isClick, bool isHold)
+        override public void OnLeft(TI_WindowsLib.Button button)
         {
-            if (isClick)
-            {
-                PerformAction(ButtonEnum.Right);             
-            }
-            if (isHold)
-            {
-                PerformAction(ButtonEnum.Both);
-            }
-        }
-        override public void OnButtonSingleOrDoubleClick(BLE_Utilities button, bool isSingleClick, bool isDoubleClick)
-        {
-            if (isDoubleClick)
-            {
-                PerformAction(ButtonEnum.Left);
-            }
+            PerformAction(ButtonEnum.Left);
         }
 
-        override public void OnButtonSingleOrDoubleClickOrHold(BLE_Utilities button, bool isSingleClick, bool isDoubleClick, bool isHold)
+        override public void OnRight(TI_WindowsLib.Button button)
         {
+            PerformAction(ButtonEnum.Right);
+        }
 
+        override public void OnBoth(TI_WindowsLib.Button button)
+        {
+            PerformAction(ButtonEnum.Both);
         }
     }
 }

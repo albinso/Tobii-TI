@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TI_WindowsLib;
 
 namespace TobiiGUI
 {
@@ -17,21 +18,30 @@ namespace TobiiGUI
         object functionChoice;
         public SelectionForm()
         {
-            //Manager m = new Manager();
-            //myList = m.StartScan;
-            //myButton = myList[0];
-            //myButton.connect();
-            //Event listner = new MyListerInterface();
-            //myButton.setEvent(lister);
-
-            Configuration config = new Configuration();
-            BLE_Utilities.SetListener(config);
-            BLE_Utilities.Start();
+            Task waitMe = Task.Run(() => DoTest());
+            waitMe.Wait();
 
             InitializeComponent();
             InitializeComboBox();
         }
 
+        List<TI_WindowsLib.Button> buttonList;
+        private async Task DoTest()
+        {
+            ButtonFactory factory = new ButtonFactory();
+            await factory.Scan();
+            buttonList = factory.GetAllScannedButtons();
+            try
+            {
+                Configuration config = new Configuration();
+                buttonList[0].Connect();
+                buttonList[0].Listener = config;
+            }
+            catch
+            {
+                Console.WriteLine("Found no buttons...");
+            }
+        }
 
         private void InitializeComboBox()
         {
@@ -88,7 +98,7 @@ namespace TobiiGUI
 
         private void commitButton_Click(object sender, EventArgs e)
         {
-            Configuration c = (Configuration)(BLE_Utilities.listener);
+            Configuration c = (Configuration)(buttonList[0].Listener);
             c.BindFunction(buttonChoice, deviceChoice, functionChoice);
         }
 
