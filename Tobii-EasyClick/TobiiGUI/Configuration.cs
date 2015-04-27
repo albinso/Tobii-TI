@@ -114,17 +114,18 @@ namespace TobiiGUI
             }
         }
 
-        override public void OnLeft(TI_WindowsLib.Button button)
+        override public void OnLeft(BLEButton button, DateTimeOffset timestamp)
         {
             PerformAction(ButtonEnum.Left);
+            MessageBox.Show("Pressed left");
         }
 
-        override public void OnRight(TI_WindowsLib.Button button)
+        override public void OnRight(BLEButton button, DateTimeOffset timestamp)
         {
             PerformAction(ButtonEnum.Right);
         }
 
-        override public void OnBoth(TI_WindowsLib.Button button)
+        override public void OnBoth(BLEButton button, DateTimeOffset timestamp)
         {
             PerformAction(ButtonEnum.Both);
         }

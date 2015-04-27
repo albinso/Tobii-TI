@@ -25,10 +25,10 @@ namespace TobiiGUI
             InitializeComboBox();
         }
 
-        List<TI_WindowsLib.Button> buttonList;
+        List<BLEButton> buttonList;
         private async Task DoTest()
         {
-            ButtonFactory factory = new ButtonFactory();
+            BLEButtonFactory factory = new BLEButtonFactory();
             await factory.Scan();
             buttonList = factory.GetAllScannedButtons();
             try

@@ -52,9 +52,8 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="TI-WindowsLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Flic\Flic-WindowsLib\TI-WindowsLib\bin\Debug\TI-WindowsLib.dll</HintPath>
+    <Reference Include="TI-WindowsLib">
+      <HintPath>Resources\TI-WindowsLib.dll</HintPath>
     </Reference>
     <Reference Include="Windows" />
   </ItemGroup>
@@ -94,6 +93,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\TI-WindowsLib.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\TI-WindowsLib.dll" />
+    <Content Include="TI-WindowsLib.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
