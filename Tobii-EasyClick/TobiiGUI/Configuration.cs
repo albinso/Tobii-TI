@@ -9,7 +9,7 @@ using TI_WindowsLib;
 
 namespace TobiiGUI
 {
-    public class Configuration : ButtonListener
+    public class Configuration : BLEButtonListener
     {
         public enum ButtonEnum { Right, Left, Both }
         public enum DeviceEnum { Mouse, Keyboard, Command }
@@ -57,6 +57,9 @@ namespace TobiiGUI
                 {"Ctrl + T", "^{T}"},
                 {"Right", "{RIGHT}"},
                 {"Left", "{LEFT}"},
+                {"Up", "{UP}"},
+                {"Down", "{DOWN}"},
+                {"W", "{W}"},
                 //{"Custom", "kb"}
             };
 
@@ -117,7 +120,6 @@ namespace TobiiGUI
         override public void OnLeft(BLEButton button, DateTimeOffset timestamp)
         {
             PerformAction(ButtonEnum.Left);
-            MessageBox.Show("Pressed left");
         }
 
         override public void OnRight(BLEButton button, DateTimeOffset timestamp)
