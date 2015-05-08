@@ -52,9 +52,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="TI-WindowsLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TI-WindowsLib, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Flic\Flic-WindowsLib\TI-WindowsLib\bin\Debug\TI-WindowsLib.dll</HintPath>
+      <HintPath>Resources\TI-WindowsLib.dll</HintPath>
     </Reference>
     <Reference Include="Windows" />
   </ItemGroup>
@@ -98,7 +98,12 @@
   <ItemGroup>
     <None Include="bin\Debug\TI-WindowsLib.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\bg-red.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bg-green.jpg" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TI-WindowsLib.dll" />
   </ItemGroup>

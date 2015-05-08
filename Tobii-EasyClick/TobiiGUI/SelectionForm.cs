@@ -14,15 +14,15 @@ namespace TobiiGUI
 {
     public partial class SelectionForm : Form
     {
-        Configuration.ButtonEnum buttonChoice = Configuration.ButtonEnum.Right;
+        Configuration.ClickEnum clickChoice = Configuration.ClickEnum.Right;
         Configuration.DeviceEnum deviceChoice = Configuration.DeviceEnum.Mouse;
         object functionChoice;
 
         private Dictionary<string, BLEButton> bleChoices = new Dictionary<string, BLEButton>();
 
-        BLEButton currentBle;
         public SelectionForm()
         {
+            
             InitializeComponent();
 
             Task waitMe = Task.Run(() => PopulateBleComboBox());
@@ -32,37 +32,13 @@ namespace TobiiGUI
 
         }
 
-        private async void testAndRemoveButtons()
-        {
-            Dictionary<string, BLEButton> updatedBleChoices = new Dictionary<string, BLEButton>();
-            int count = bleChoices.Count;
-            int percentage = 100/count;
-            progressBar.Value = 100%count+1;
-            foreach (KeyValuePair<string, BLEButton> entry in bleChoices)
-            {
-                if (await entry.Value.Connect())
-                {
-                    updatedBleChoices.Add(entry.Key, entry.Value);
-                }
-                int sum = progressBar.Value + percentage;
-                progressBar.Value = sum > 100 ? 100 : sum;
-            }
-
-            bleChoices = updatedBleChoices;
-            bleComboBox.DataSource = new BindingSource(bleChoices, null);
-        }
-
-        List<BLEButton> buttonList;
         private async Task PopulateBleComboBox()
         {
-            
+
             BLEButtonFactory factory = new BLEButtonFactory();
-            await factory.Scan();
-            buttonList = factory.GetAllButtons();
+            List<BLEButton> buttonList = factory.GetAllButtons();
             try
             {
-                currentBle = buttonList[0];
-
                 int i = 1;
                 foreach (BLEButton b in buttonList)
                 {
@@ -77,14 +53,45 @@ namespace TobiiGUI
             {
                 Console.WriteLine("Found no buttons...");
             }
-            
+
+        }
+
+        private async void testAndRemoveButtons()
+        {
+            Dictionary<string, BLEButton> updatedBleChoices = new Dictionary<string, BLEButton>();
+
+            int count = bleChoices.Count;
+            int percentage = 100 / count;
+            progressBar.Value = 100 % count + 1;
+            foreach (KeyValuePair<string, BLEButton> entry in bleChoices)
+            {
+                if (await entry.Value.Connect())
+                {
+                    updatedBleChoices.Add(entry.Key, entry.Value);
+                }
+                int sum = progressBar.Value + percentage;
+                progressBar.Value = sum > 100 ? 100 : sum;
+            }
+
+            bleComboBox.DataSource = new BindingSource(updatedBleChoices, null);
+            bleComboBox.ValueMember = "Value";
+            bleComboBox.DisplayMember = "Key";
+
+            if (updatedBleChoices.Count == 0)
+            {
+                this.BackgroundImage = global::TobiiGUI.Properties.Resources.bg_red;
+            }
+            else
+            {
+                this.BackgroundImage = global::TobiiGUI.Properties.Resources.bg_green;
+            }
         }
 
         private void InitializeComboBoxes()
         {
-            buttonComboBox.DataSource = new BindingSource(Configuration.buttonChoices, null);
-            buttonComboBox.ValueMember = "Value";
-            buttonComboBox.DisplayMember = "Key";
+            clickComboBox.DataSource = new BindingSource(Configuration.clickChoices, null);
+            clickComboBox.ValueMember = "Value";
+            clickComboBox.DisplayMember = "Key";
 
             deviceComboBox.DataSource = new BindingSource(Configuration.deviceChoices, null);
             deviceComboBox.ValueMember = "Value";
@@ -101,16 +108,27 @@ namespace TobiiGUI
 
         private void bleComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            KeyValuePair<string, BLEButton> choice = (KeyValuePair<string, BLEButton>)bleComboBox.SelectedItem;
-            BLEButton bleChoice = choice.Value;
-            currentBle = bleChoice;
+            if (!(bleComboBox.SelectedItem is Dictionary<string, BLEButton>))
+            {
+                // Enable the combobox if there are items inside
+                commitButton.Enabled = true;
+                bleComboBox.Enabled = true;
+            }
+            else
+            {
+                bleComboBox.ResetText();
+                //Enable the combobox if there are NO items inside
+                commitButton.Enabled = false;
+                bleComboBox.Enabled = false;
+
+            }
         }
 
 
-        private void buttonComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void clickComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            KeyValuePair<string, Configuration.ButtonEnum> choice = (KeyValuePair<string, Configuration.ButtonEnum>)buttonComboBox.SelectedItem;
-            buttonChoice = choice.Value;
+            KeyValuePair<string, Configuration.ClickEnum> choice = (KeyValuePair<string, Configuration.ClickEnum>)clickComboBox.SelectedItem;
+            clickChoice = choice.Value;
 
         }
 
@@ -122,7 +140,7 @@ namespace TobiiGUI
         }
 
         private void functionComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {   
+        {
             KeyValuePair<string, object> choice = (KeyValuePair<string, object>)functionComboBox.SelectedItem;
             functionChoice = choice.Value;
 
@@ -136,25 +154,30 @@ namespace TobiiGUI
 
             //if (functionChoice.ToString().Equals("kb"))
             //{
-                
+
             //    functionChoice = ShowDialog("Enter keyboard input", "Keyboard");
             //}
         }
 
         private void commitButton_Click(object sender, EventArgs e)
         {
-            Configuration c = (Configuration)(currentBle.Listener);
-            c.BindFunction(buttonChoice, deviceChoice, functionChoice);
+
+            KeyValuePair<string, BLEButton> choice = (KeyValuePair<string, BLEButton>)bleComboBox.SelectedItem;
+            Configuration c = (Configuration)(choice.Value.Listener);
+            c.BindFunction(clickChoice, deviceChoice, functionChoice);
+
+        }
+
+
+        private void scanButton_Click(object sender, EventArgs e)
+        {
+            bleChoices = new Dictionary<string, BLEButton>();
+            Task waitMe = Task.Run(() => PopulateBleComboBox());
+            waitMe.Wait();
+            testAndRemoveButtons();
         }
 
         private void SelectionForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
-
-   
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
 
         }

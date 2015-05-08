@@ -11,13 +11,13 @@ namespace TobiiGUI
 {
     public class Configuration : BLEButtonListener
     {
-        public enum ButtonEnum { Right, Left, Both }
+        public enum ClickEnum { Right, Left, Both }
         public enum DeviceEnum { Mouse, Keyboard, Command }
 
-        private Dictionary<ButtonEnum, DeviceEnum> keyToDevice;
-        private Dictionary<ButtonEnum, object> keyToFunction;
+        private Dictionary<ClickEnum, DeviceEnum> keyToDevice;
+        private Dictionary<ClickEnum, object> keyToFunction;
 
-        public static Dictionary<string, ButtonEnum> buttonChoices;
+        public static Dictionary<string, ClickEnum> clickChoices;
         public static Dictionary<string, DeviceEnum> deviceChoices;
 
         static Dictionary<string, object> mouseFunctions;
@@ -28,14 +28,14 @@ namespace TobiiGUI
 
         public Configuration()
         {
-            keyToDevice = new Dictionary<ButtonEnum,DeviceEnum>();
-            keyToFunction = new Dictionary<ButtonEnum, object>();
+            keyToDevice = new Dictionary<ClickEnum,DeviceEnum>();
+            keyToFunction = new Dictionary<ClickEnum, object>();
 
-            /////////////// Button Dictionary /////////////////
-            buttonChoices = new Dictionary<string, ButtonEnum> {
-                {"Right", ButtonEnum.Right},
-                {"Left", ButtonEnum.Left},
-                {"Both", ButtonEnum.Both}
+            /////////////// Click Dictionary /////////////////
+            clickChoices = new Dictionary<string, ClickEnum> {
+                {"Right", ClickEnum.Right},
+                {"Left", ClickEnum.Left},
+                {"Both", ClickEnum.Both}
             };
 
             ////////////// Device Dictionary /////////////////
@@ -82,34 +82,34 @@ namespace TobiiGUI
             return deviceFunctions[(int) choice];
         }
 
-        public void BindFunction(ButtonEnum buttonChoice, DeviceEnum deviceChoice, object functionChoice)
+        public void BindFunction(ClickEnum clickChoice, DeviceEnum deviceChoice, object functionChoice)
         {
-            keyToDevice.Remove(buttonChoice);
-            keyToFunction.Remove(buttonChoice);
+            keyToDevice.Remove(clickChoice);
+            keyToFunction.Remove(clickChoice);
 
-            keyToDevice.Add(buttonChoice, deviceChoice);
-            keyToFunction.Add(buttonChoice, functionChoice);
+            keyToDevice.Add(clickChoice, deviceChoice);
+            keyToFunction.Add(clickChoice, functionChoice);
         }
 
-        private void PerformAction(ButtonEnum button)
+        private void PerformAction(ClickEnum click)
         {
-            if (!keyToDevice.ContainsKey(button))
+            if (!keyToDevice.ContainsKey(click))
             {
                 return;
             }
 
-            DeviceEnum device = keyToDevice[button];
+            DeviceEnum device = keyToDevice[click];
             switch (device)
             {
                 case DeviceEnum.Mouse:
-                    MouseHandling.MouseClick(Convert.ToUInt32(keyToFunction[button]));
+                    MouseHandling.MouseClick(Convert.ToUInt32(keyToFunction[click]));
                     break;
                 case DeviceEnum.Keyboard:
-                    SendKeys.SendWait((string)keyToFunction[button]);
+                    SendKeys.SendWait((string)keyToFunction[click]);
                     break;
                 case DeviceEnum.Command:
                     Process process = new Process();
-                    process.StartInfo.FileName = (string)keyToFunction[button];
+                    process.StartInfo.FileName = (string)keyToFunction[click];
                     process.Start();
                     break;
                 default:
@@ -119,17 +119,17 @@ namespace TobiiGUI
 
         override public void OnLeft(BLEButton button, DateTimeOffset timestamp)
         {
-            PerformAction(ButtonEnum.Left);
+            PerformAction(ClickEnum.Left);
         }
 
         override public void OnRight(BLEButton button, DateTimeOffset timestamp)
         {
-            PerformAction(ButtonEnum.Right);
+            PerformAction(ClickEnum.Right);
         }
 
         override public void OnBoth(BLEButton button, DateTimeOffset timestamp)
         {
-            PerformAction(ButtonEnum.Both);
+            PerformAction(ClickEnum.Both);
         }
     }
 }
