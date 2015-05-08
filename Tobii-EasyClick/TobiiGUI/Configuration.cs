@@ -60,7 +60,7 @@ namespace TobiiGUI
                 {"Up", "{UP}"},
                 {"Down", "{DOWN}"},
                 {"W", "{W}"},
-                //{"Custom", "kb"}
+                {"Custom", "kb"}
             };
 
             commandFunctions = new Dictionary<string, object> {
