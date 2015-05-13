@@ -17,41 +17,26 @@ namespace TobiiGUI
         private Dictionary<ClickEnum, DeviceEnum> keyToDevice;
         private Dictionary<ClickEnum, object> keyToFunction;
 
-        public static Dictionary<string, ClickEnum> clickChoices;
-        public static Dictionary<string, DeviceEnum> deviceChoices;
-
-        static Dictionary<string, object> mouseFunctions;
-        static Dictionary<string, object> keyBoardFunctions;
-        static Dictionary<string, object> commandFunctions;
-
-        static Dictionary<string, object>[] deviceFunctions;
-
-        public Configuration()
-        {
-            keyToDevice = new Dictionary<ClickEnum,DeviceEnum>();
-            keyToFunction = new Dictionary<ClickEnum, object>();
-
-            /////////////// Click Dictionary /////////////////
-            clickChoices = new Dictionary<string, ClickEnum> {
+        /////////////// Click Dictionary /////////////////
+        public static Dictionary<string, ClickEnum> clickChoices = new Dictionary<string, ClickEnum> {
                 {"Right", ClickEnum.Right},
                 {"Left", ClickEnum.Left},
                 {"Both", ClickEnum.Both}
             };
 
-            ////////////// Device Dictionary /////////////////
-            deviceChoices = new Dictionary<string, DeviceEnum> {
+        ////////////// Device Dictionary /////////////////
+        public static Dictionary<string, DeviceEnum> deviceChoices = new Dictionary<string, DeviceEnum> {
                 {"Mouse", DeviceEnum.Mouse},
                 {"Keyboard", DeviceEnum.Keyboard},
                 {"Command", DeviceEnum.Command}
             };
 
-            //////////// Functions Dictionary ////////////////
-            mouseFunctions = new Dictionary<string, object> {
+        //////////// Functions Dictionary ////////////////
+        static Dictionary<string, object> mouseFunctions = new Dictionary<string, object> {
                 {"Right click", (MouseHandling.MOUSEEVENTF_RIGHTUP | MouseHandling.MOUSEEVENTF_RIGHTDOWN)},
                 {"Left click", (MouseHandling.MOUSEEVENTF_LEFTUP | MouseHandling.MOUSEEVENTF_LEFTDOWN)},
             };
-
-            keyBoardFunctions = new Dictionary<string, object> {
+        static Dictionary<string, object> keyBoardFunctions = new Dictionary<string, object> {
                 {"Alt + F4", "%{F4}"},
                 {"Ctrl + Tab", "^{Tab}"},
                 {"Ctrl + T", "^{T}"},
@@ -63,17 +48,22 @@ namespace TobiiGUI
                 {"Custom", "kb"}
             };
 
-            commandFunctions = new Dictionary<string, object> {
+        static Dictionary<string, object> commandFunctions = new Dictionary<string, object> {
                 {"Launch Chrome", @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"},
                 {"Launch Music", @"C:\Program Files (x86)\Windows Media Player\wmplayer.exe"},
                 {"Choose file", "cf"}
             };
 
-            deviceFunctions = new Dictionary<string, object>[] {
+        static Dictionary<string, object>[] deviceFunctions = new Dictionary<string, object>[] {
                 mouseFunctions, 
                 keyBoardFunctions,
                 commandFunctions
             };
+
+        public Configuration()
+        {
+            keyToDevice = new Dictionary<ClickEnum,DeviceEnum>();
+            keyToFunction = new Dictionary<ClickEnum, object>();         
         }
 
         

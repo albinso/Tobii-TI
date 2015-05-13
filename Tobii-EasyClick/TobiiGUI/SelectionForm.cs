@@ -61,6 +61,10 @@ namespace TobiiGUI
             Dictionary<string, BLEButton> updatedBleChoices = new Dictionary<string, BLEButton>();
 
             int count = bleChoices.Count;
+            if (count == 0)
+            {
+                return;
+            }
             int percentage = 100 / count;
             progressBar.Value = 100 % count + 1;
             foreach (KeyValuePair<string, BLEButton> entry in bleChoices)
@@ -101,9 +105,12 @@ namespace TobiiGUI
             functionComboBox.ValueMember = "Value";
             functionComboBox.DisplayMember = "Key";
 
-            bleComboBox.DataSource = new BindingSource(bleChoices, null);
-            bleComboBox.ValueMember = "Value";
-            bleComboBox.DisplayMember = "Key";
+            if (bleChoices.Count > 0)
+            {
+                bleComboBox.DataSource = new BindingSource(bleChoices, null);
+                bleComboBox.ValueMember = "Value";
+                bleComboBox.DisplayMember = "Key";
+            }
         }
 
         private void bleComboBox_SelectedIndexChanged(object sender, EventArgs e)
