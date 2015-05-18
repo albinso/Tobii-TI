@@ -52,9 +52,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="TI-WindowsLib, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TrampzSDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\TI-WindowsLib.dll</HintPath>
+      <HintPath>Resources\TrampzSDK.dll</HintPath>
     </Reference>
     <Reference Include="Windows" />
   </ItemGroup>
@@ -105,7 +105,7 @@
     <None Include="Resources\bg-green.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TI-WindowsLib.dll" />
+    <None Include="Resources\TrampzSDK.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

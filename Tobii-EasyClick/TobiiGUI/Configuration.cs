@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
-using TI_WindowsLib;
+using TrampzSDK;
 
 namespace TobiiGUI
 {
     public class Configuration : BLEButtonListener
     {
         public enum ClickEnum { Right, Left, Both }
-        public enum DeviceEnum { Mouse, Keyboard, Command }
+        public enum DeviceEnum { Mouse, Keyboard, Command, None }
 
         private Dictionary<ClickEnum, DeviceEnum> keyToDevice;
         private Dictionary<ClickEnum, object> keyToFunction;
@@ -28,7 +28,8 @@ namespace TobiiGUI
         public static Dictionary<string, DeviceEnum> deviceChoices = new Dictionary<string, DeviceEnum> {
                 {"Mouse", DeviceEnum.Mouse},
                 {"Keyboard", DeviceEnum.Keyboard},
-                {"Command", DeviceEnum.Command}
+                {"Command", DeviceEnum.Command},
+                {"None", DeviceEnum.None}
             };
 
         //////////// Functions Dictionary ////////////////
@@ -54,10 +55,16 @@ namespace TobiiGUI
                 {"Choose file", "cf"}
             };
 
+        static Dictionary<string, object> noneFunctions = new Dictionary<string, object> { 
+            {"None", ""}
+        
+        };
+
         static Dictionary<string, object>[] deviceFunctions = new Dictionary<string, object>[] {
                 mouseFunctions, 
                 keyBoardFunctions,
-                commandFunctions
+                commandFunctions,
+                noneFunctions
             };
 
         public Configuration()
@@ -101,6 +108,8 @@ namespace TobiiGUI
                     Process process = new Process();
                     process.StartInfo.FileName = (string)keyToFunction[click];
                     process.Start();
+                    break;
+                case DeviceEnum.None:
                     break;
                 default:
                     break;

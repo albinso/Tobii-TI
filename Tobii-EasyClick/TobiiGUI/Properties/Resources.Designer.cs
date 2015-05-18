@@ -83,9 +83,9 @@ namespace TobiiGUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] TI_WindowsLib {
+        internal static byte[] TrampzSDK {
             get {
-                object obj = ResourceManager.GetObject("TI_WindowsLib", resourceCulture);
+                object obj = ResourceManager.GetObject("TrampzSDK", resourceCulture);
                 return ((byte[])(obj));
             }
         }
